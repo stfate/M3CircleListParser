@@ -30,14 +30,6 @@ class M3CircleListParser(HTMLParser):
         self.cur_data = {}
         
     def handle_starttag(self, tag, attr):
-        # if tag.lower() == 'a':
-            # self.is_a = True
-            # for i in attr:
-                # if i[0].lower() == 'href':
-                    # self.href = i[1]
-
-        # print('start:{}'.format( tag.lower() ) )
-                    
         if tag.lower() == 'table':
             for i in attr:
                 if i[0].lower() == 'class' and i[1] == 'tblCircleList':
@@ -62,18 +54,16 @@ class M3CircleListParser(HTMLParser):
                         self.href = i[1]
                     
     def handle_endtag(self, tag):
-        # print('end:{}'.format( tag.lower() ) )
-
         if tag.lower() == 'a':
             self.is_a = False
             
         if tag.lower() == 'td':
-            if self.is_space_no is True:
+            if self.is_space is True:
                 self.td_data = self.td_data.strip()
                 splitted = self.td_data.split('\t')
                 self.floor = splitted[0]
-                self.space_no = splitted[1]+splitted[2]
-                self.is_space_no = False
+                self.space = splitted[1]+splitted[2]
+                self.is_space = False
                 
             if self.is_circle_name is True:
                 self.name = self.circle_data[0]
@@ -83,7 +73,7 @@ class M3CircleListParser(HTMLParser):
             if self.is_circle_desc is True:
                 self.is_circle_desc = False
                 self.cur_data['floor'] = self.floor
-                self.cur_data['space'] = self.space_no
+                self.cur_data['space'] = self.space
                 self.cur_data['name'] = self.name
                 self.cur_data['url'] = self.href
                 self.cur_data['desc'] = self.desc
@@ -98,7 +88,6 @@ class M3CircleListParser(HTMLParser):
         if tag.lower() == 'table':
             if self.is_tbl == True:
                 self.is_tbl = False
-                # self.data.append({'place': , 'space_no': , })
             
     def handle_data(self, data):
         if self.is_a is True:
@@ -111,8 +100,6 @@ class M3CircleListParser(HTMLParser):
             self.td_data += '\t{}'.format( data.strip() )
             
         if self.is_circle_name is True:
-            # self.name = data.lstrip().split()[0]
-            # print(self.name)
             self.circle_data.append(data.strip())
             
         if self.is_circle_desc is True:
