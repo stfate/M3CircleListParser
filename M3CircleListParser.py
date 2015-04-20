@@ -20,7 +20,7 @@ class M3CircleListParser(HTMLParser):
         self.is_a = False
         self.is_td = False
         self.is_tbl = False
-        self.is_space_no = False
+        self.is_space = False
         self.is_circle_name = False
         self.is_circle_desc = False
         self.href = None
@@ -49,7 +49,7 @@ class M3CircleListParser(HTMLParser):
                 self.td_data = ''
                 for i in attr:
                     if i[0].lower() == 'class' and i[1] == 'left':
-                        self.is_space_no = True
+                        self.is_space = True
                     if i[0].lower() == 'class' and i[1] == 'center':
                         self.is_circle_name = True
                     if i[0].lower() == 'class' and i[1] == 'right':
