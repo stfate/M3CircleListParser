@@ -9,7 +9,6 @@ M3 webのサークルリストをcsvに変換するスクリプト
 
 from HTMLParser import HTMLParser
 import urllib2
-import pprint
 import sys
 import codecs
 
