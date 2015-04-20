@@ -34,7 +34,7 @@ class M3CircleListParser(HTMLParser):
                 if i[0].lower() == 'class' and i[1] == 'tblCircleList':
                     self.is_tbl = True
                     
-        if self.is_tbl is True:
+        if self.is_tbl:
             if tag.lower() == 'td':
                 self.is_td = True
                 self.td_data = ''
@@ -46,7 +46,7 @@ class M3CircleListParser(HTMLParser):
                     if i[0].lower() == 'class' and i[1] == 'right':
                         self.is_circle_desc = True
                         
-        if self.is_circle_name is True:
+        if self.is_circle_name:
             if tag.lower() == 'a':
                 for i in attr:
                     if i[0].lower() == 'href':
@@ -64,12 +64,12 @@ class M3CircleListParser(HTMLParser):
                 self.space = splitted[1]+splitted[2]
                 self.is_space = False
                 
-            if self.is_circle_name is True:
+            if self.is_circle_name:
                 self.name = self.circle_data[0]
                 self.circle_data = []
                 self.is_circle_name = False
                 
-            if self.is_circle_desc is True:
+            if self.is_circle_desc:
                 self.is_circle_desc = False
                 self.cur_data['floor'] = self.floor
                 self.cur_data['space'] = self.space
@@ -85,23 +85,23 @@ class M3CircleListParser(HTMLParser):
             self.td_data = ''
                 
         if tag.lower() == 'table':
-            if self.is_tbl == True:
+            if self.is_tbl:
                 self.is_tbl = False
             
     def handle_data(self, data):
-        if self.is_a is True:
+        if self.is_a:
             self.urldata = data
             
-        if self.is_tbl is True:
+        if self.is_tbl:
             pass
 
-        if self.is_td is True:
+        if self.is_td:
             self.td_data += '\t{}'.format( data.strip() )
             
-        if self.is_circle_name is True:
+        if self.is_circle_name:
             self.circle_data.append(data.strip())
             
-        if self.is_circle_desc is True:
+        if self.is_circle_desc:
             self.desc = data.strip()
             
             
