@@ -96,7 +96,7 @@ class M3CircleListParser(HTMLParser):
             pass
 
         if self.is_td:
-            self.td_data += '\t{}'.format( data.strip() )
+            self.td_data += u'\t{}'.format( data.strip() )
             
         if self.is_circle_name:
             self.circle_data.append(data.strip())
@@ -110,17 +110,17 @@ if __name__ == '__main__':
         print('usage: python M3CircleListParser.py <output csv filename>')
         exit(-1)
         
-    m3_url = 'http://www.m3net.jp/attendance/circle2015s.html'
+    m3_url = 'http://www.m3net.jp/attendance/circle2015f.html'
     fid = urllib2.urlopen(m3_url)
     html = fid.read().decode('utf-8')
     
-    parser = M3WebCircleListParser()
+    parser = M3CircleListParser()
     parser.feed(html)
     
     fname_out = sys.argv[1]
     with codecs.open(fname_out, 'w', encoding='utf-8') as fo:
         for item in parser.data:
-            out_str = '{0}\t{1}\t{2}\t{3}\n'.format(
+            out_str = u'{0}\t{1}\t{2}\t{3}\n'.format(
                 item['floor'],
                 item['space'],
                 item['name'],
